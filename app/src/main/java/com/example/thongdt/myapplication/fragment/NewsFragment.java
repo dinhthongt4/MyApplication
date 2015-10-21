@@ -149,7 +149,12 @@ public class NewsFragment extends Fragment {
             Report report = new Report();
             report.setUrlImage(elementDatas.get(i + 1).select("img").attr("src"));
             report.setTitle(elementDatas.get(i + 3).text());
-            report.setLink(elementDatas.get(i + 3).select("a").attr("href"));
+
+            String link = elementDatas.get(i + 3).select("a").attr("href");
+            if (!(link.contains("http://") || link.contains("https://"))) {
+                link = "http://bongdaso.com/" + link;
+            }
+            report.setLink(link);
             report.setInformation(elementDatas.get(i + 4).text());
             mReports.add(report);
             i = i + 5;
@@ -202,6 +207,13 @@ public class NewsFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 DetailActivity_.intent(getContext()).extra("url", mNews.get(position).getLink()).start();
+            }
+        });
+
+        mReportRecyclerViewAdapter.setOnItemClickListener(new ReportRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                DetailActivity_.intent(getContext()).extra("url", mReports.get(position).getLink()).start();
             }
         });
     }

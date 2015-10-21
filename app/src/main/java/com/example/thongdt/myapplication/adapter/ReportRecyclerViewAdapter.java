@@ -22,6 +22,7 @@ public class ReportRecyclerViewAdapter extends RecyclerView.Adapter<ReportRecycl
 
     private ArrayList<Report> mReports;
     private DisplayImageOptions mDisplayImageOptions;
+    private OnItemClickListener mOnItemClickListener;
 
     public ReportRecyclerViewAdapter(ArrayList<Report> reports) {
         this.mReports = reports;
@@ -51,6 +52,10 @@ public class ReportRecyclerViewAdapter extends RecyclerView.Adapter<ReportRecycl
         return mReports.size();
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         TextView tvInformation;
@@ -62,6 +67,19 @@ public class ReportRecyclerViewAdapter extends RecyclerView.Adapter<ReportRecycl
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvInformation = (TextView) itemView.findViewById(R.id.tvInformation);
             imgAvatar = (ImageView) itemView.findViewById(R.id.imgAvatar);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onClick(getPosition());
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onClick(int position);
     }
 }
