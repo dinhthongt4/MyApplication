@@ -17,4 +17,5 @@ public class InformationGame {
     private String urlVideo;
     private int type;
     private String title;
+    private boolean isBg;
 }

@@ -38,8 +38,6 @@ public class NewsFragment extends Fragment {
 
     private static final String TAG = "NewsFragment";
     private ArrayList<New> mNews;
-    private OnLoadSuccessData mOnLoadSuccessData;
-    private ArrayList<Menu> mMenus;
     private NewsRecyclerViewAdapter mNewsRecyclerViewAdapter;
     private ReportRecyclerViewAdapter mReportRecyclerViewAdapter;
     private ArrayList<Report> mReports;
@@ -47,7 +45,6 @@ public class NewsFragment extends Fragment {
     @AfterViews
     void init() {
         mNews = new ArrayList<>();
-        mMenus = new ArrayList<>();
         mReports = new ArrayList<>();
 
         mNewsRecyclerViewAdapter = new NewsRecyclerViewAdapter(mNews);
@@ -71,7 +68,6 @@ public class NewsFragment extends Fragment {
 
         getTitleNews(doc);
         getListNews(doc);
-        getListMenu();
 
         setUiApplication();
     }
@@ -80,20 +76,6 @@ public class NewsFragment extends Fragment {
     void setUiApplication() {
 
         mNewsRecyclerViewAdapter.notifyDataSetChanged();
-        if (mOnLoadSuccessData != null) {
-            mOnLoadSuccessData.onSuccess(mMenus);
-        }
-    }
-
-    private void getListMenu() {
-        String sTitles [] = getResources().getStringArray(R.array.list_recycler_menu_title);
-        String sUrls [] = getResources().getStringArray(R.array.list_recycler_menu_url);
-        for (int i = 0; i < sTitles.length; i++) {
-            Menu menu = new Menu();
-            menu.setTitle(sTitles[i]);
-            menu.setUrl(sUrls[i]);
-            mMenus.add(menu);
-        }
     }
 
     private void getTitleNews(Document doc) {
@@ -211,14 +193,6 @@ public class NewsFragment extends Fragment {
             n.setLink(link);
             mNews.add(n);
         }
-    }
-
-    public void SetOnLoadSuccessData(OnLoadSuccessData onLoadSuccessData) {
-        mOnLoadSuccessData = onLoadSuccessData;
-    }
-
-    public interface OnLoadSuccessData {
-        void onSuccess(ArrayList<Menu> menus);
     }
 
     private void onListener() {

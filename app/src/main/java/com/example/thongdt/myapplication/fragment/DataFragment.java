@@ -33,13 +33,11 @@ public class DataFragment extends Fragment {
     @ViewById(R.id.recyclerViewData)
     RecyclerView mRecyclerViewData;
 
-    private ArrayList<Menu> mMenus;
     private ArrayList<InformationGame> mInformationGames;
     private DataRecyclerViewAdapter mDataRecyclerViewAdapter;
 
     @AfterViews
     void init() {
-        mMenus = new ArrayList<>();
         mInformationGames = new ArrayList<>();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -56,6 +54,7 @@ public class DataFragment extends Fragment {
         mInformationGames.clear();
         loadInformationGameNotStart(urlNotStart);
         loadInformationGameStarted(urlStarted);
+        setBgItem();
         setUiApplication();
     }
 
@@ -129,12 +128,11 @@ public class DataFragment extends Fragment {
         }
     }
 
-    private void getListMenu() {
-        mMenus.clear();
-        String [] title = getResources().getStringArray(R.array.list_recycler_menu_data);
-        for (int i = 0 ; i < title.length ; i ++) {
-            Menu menu = new Menu();
-            menu.setTitle(title[i]);
+    private void setBgItem() {
+        for (int i = 0 ; i < mInformationGames.size(); i++ ) {
+            if (i % 2 == 1) {
+                mInformationGames.get(i).setBg(true);
+            }
         }
     }
 }

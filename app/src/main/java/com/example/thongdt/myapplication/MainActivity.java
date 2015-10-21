@@ -107,14 +107,8 @@ public class MainActivity extends FragmentActivity {
         fragmentTransaction.add(R.id.frContainFragment, newsFragment).commit();
         mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news));
 
-        newsFragment.SetOnLoadSuccessData(new NewsFragment.OnLoadSuccessData() {
-            @Override
-            public void onSuccess(ArrayList<Menu> menus) {
-                mMenus.clear();
-                mMenus.addAll(menus);
-                mMenuRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
+        getListMenuNews();
+        mMenuRecyclerViewAdapter.notifyDataSetChanged();
 
         mHeaderBar.setOnItemClickListener(new HeaderBar.OnItemClickListener() {
             @Override
@@ -125,14 +119,24 @@ public class MainActivity extends FragmentActivity {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, newsFragment).commit();
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news));
+
+                    getListMenuNews();
+                    mMenuRecyclerViewAdapter.notifyDataSetChanged();
+
                 } else if (position == 2) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, dataFragment).commit();
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_data));
+
+                    getListMenuData();
+                    mMenuRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, videoFragment).commit();
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_live_score));
+
+                    mMenus.clear();
+                    mMenuRecyclerViewAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -181,5 +185,27 @@ public class MainActivity extends FragmentActivity {
     @SuppressWarnings("ResourceType")
     private void openDrawer() {
         mDrawerLayout.openDrawer(START);
+    }
+
+    private void getListMenuData() {
+        mMenus.clear();
+        String [] title = getResources().getStringArray(R.array.list_recycler_menu_data);
+        for (int i = 0 ; i < title.length ; i ++) {
+            Menu menu = new Menu();
+            menu.setTitle(title[i]);
+            mMenus.add(menu);
+        }
+    }
+
+    private void getListMenuNews() {
+        mMenus.clear();
+        String sTitles [] = getResources().getStringArray(R.array.list_recycler_menu_title);
+        String sUrls [] = getResources().getStringArray(R.array.list_recycler_menu_url);
+        for (int i = 0; i < sTitles.length; i++) {
+            Menu menu = new Menu();
+            menu.setTitle(sTitles[i]);
+            menu.setUrl(sUrls[i]);
+            mMenus.add(menu);
+        }
     }
 }

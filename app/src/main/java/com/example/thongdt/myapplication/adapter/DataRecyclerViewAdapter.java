@@ -18,8 +18,6 @@ import java.util.ArrayList;
 public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<InformationGame> mInformationGames;
-    private boolean mIsBackgroundDefault;
-
 
     public DataRecyclerViewAdapter(ArrayList<InformationGame> informationGames) {
         this.mInformationGames = informationGames;
@@ -53,11 +51,10 @@ public class DataRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             itemViewHolder.tvAwayClub.setText(mInformationGames.get(position).getNameAwayClub());
             itemViewHolder.tvTime.setText(mInformationGames.get(position).getTime());
 
-            if (mIsBackgroundDefault) {
-                itemViewHolder.rlItem.setBackgroundColor(0xffD8D8D8);
-                mIsBackgroundDefault = false;
+            if (mInformationGames.get(position).isBg()) {
+                itemViewHolder.rlItem.setBackgroundColor(0xffE6E6E6);
             } else {
-                itemViewHolder.rlItem.setBackgroundColor(0xffffffff);
+                itemViewHolder.rlItem.setBackgroundColor(0xffFAFAFA);
             }
         }
     }
