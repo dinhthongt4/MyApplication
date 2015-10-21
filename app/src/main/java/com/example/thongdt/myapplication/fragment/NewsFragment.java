@@ -58,7 +58,8 @@ public class NewsFragment extends Fragment {
     }
 
     @Background
-    void loadDocument() {
+    public void loadDocument() {
+        mNews.clear();
         Document doc = null;
         try {
             doc = Jsoup.connect("http://bongdaso.com/news.aspx").userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2").get();
@@ -135,6 +136,7 @@ public class NewsFragment extends Fragment {
     @Background
     public void loadReportList(String url) {
         Document doc = null;
+        mReports.clear();
         try {
             doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2").get();
         } catch (IOException e) {

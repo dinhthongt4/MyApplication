@@ -1,5 +1,6 @@
 package com.example.thongdt.myapplication.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.objects.FullInformationVideo;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -20,9 +22,16 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecycler
 
     private OnItemClickListener mOnItemClickListener;
     private ArrayList<FullInformationVideo.Item> mItems;
+    private DisplayImageOptions mDisplayImageOptions;
 
     public VideoRecyclerViewAdapter(ArrayList<FullInformationVideo.Item> items) {
         this.mItems = items;
+        mDisplayImageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     @Override
@@ -34,7 +43,7 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecycler
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.tvTitle.setText(mItems.get(position).snippet.title);
-        ImageLoader.getInstance().displayImage(mItems.get(position).snippet.thumbnails.high.url, holder.imgAvatar);
+        ImageLoader.getInstance().displayImage(mItems.get(position).snippet.thumbnails.high.url, holder.imgAvatar, mDisplayImageOptions);
     }
 
     @Override

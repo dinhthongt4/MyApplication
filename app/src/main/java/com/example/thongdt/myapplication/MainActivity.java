@@ -21,6 +21,7 @@ import com.example.thongdt.myapplication.fragment.VideoFragment;
 import com.example.thongdt.myapplication.fragment.VideoFragment_;
 import com.example.thongdt.myapplication.objects.Menu;
 import com.example.thongdt.myapplication.utils.HeaderBar;
+import com.example.thongdt.myapplication.utils.Link;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -60,6 +61,7 @@ public class MainActivity extends FragmentActivity {
 
     private ArrayList<Menu> mMenus;
     private MenuRecyclerViewAdapter mMenuRecyclerViewAdapter;
+    private boolean mIsDataFragment;
 
     @AfterViews
     void init() {
@@ -118,18 +120,20 @@ public class MainActivity extends FragmentActivity {
                 } else if (position == 1) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, newsFragment).commit();
-                    mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news));
-
+                    newsFragment.loadDocument();
                     getListMenuNews();
+                    mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news));
                     mMenuRecyclerViewAdapter.notifyDataSetChanged();
+                    mIsDataFragment = false;
 
                 } else if (position == 2) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, dataFragment).commit();
-                    mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_data));
-
                     getListMenuData();
+                    mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_data) + " > " + mMenus.get(0).getTitle());
                     mMenuRecyclerViewAdapter.notifyDataSetChanged();
+                    mIsDataFragment = true;
+
                 } else {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, videoFragment).commit();
@@ -170,14 +174,25 @@ public class MainActivity extends FragmentActivity {
                 setListDefault();
                 mMenus.get(position).setSelected(true);
                 mMenuRecyclerViewAdapter.notifyDataSetChanged();
-                mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news) + " > " + mMenus.get(position).getTitle());
-                newsFragment.loadDataSection(mMenus.get(position).getUrl());
+
+
+                if (mIsDataFragment) {
+                    mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_data) + " > " + mMenus.get(position).getTitle());
+                    dataFragment.loadInformationGame(Link.LINK_STARTED[position], Link.LINK_NOT_START[position]);
+                } else {
+                    mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news) + " > " + mMenus.get(position).getTitle());
+                    if (position == 0) {
+                        newsFragment.loadReportList(mMenus.get(position).getUrl());
+                    } else {
+                        newsFragment.loadDataSection(mMenus.get(position).getUrl());
+                    }
+                }
             }
         });
     }
 
     private void setListDefault() {
-        for (int i = 0; i < mMenus.size(); i ++) {
+        for (int i = 0; i < mMenus.size(); i++) {
             mMenus.get(i).setSelected(false);
         }
     }
@@ -189,8 +204,8 @@ public class MainActivity extends FragmentActivity {
 
     private void getListMenuData() {
         mMenus.clear();
-        String [] title = getResources().getStringArray(R.array.list_recycler_menu_data);
-        for (int i = 0 ; i < title.length ; i ++) {
+        String[] title = getResources().getStringArray(R.array.list_recycler_menu_data);
+        for (int i = 0; i < title.length; i++) {
             Menu menu = new Menu();
             menu.setTitle(title[i]);
             mMenus.add(menu);
@@ -199,8 +214,8 @@ public class MainActivity extends FragmentActivity {
 
     private void getListMenuNews() {
         mMenus.clear();
-        String sTitles [] = getResources().getStringArray(R.array.list_recycler_menu_title);
-        String sUrls [] = getResources().getStringArray(R.array.list_recycler_menu_url);
+        String sTitles[] = getResources().getStringArray(R.array.list_recycler_menu_title);
+        String sUrls[] = getResources().getStringArray(R.array.list_recycler_menu_url);
         for (int i = 0; i < sTitles.length; i++) {
             Menu menu = new Menu();
             menu.setTitle(sTitles[i]);

@@ -1,5 +1,6 @@
 package com.example.thongdt.myapplication.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.objects.Report;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -19,9 +21,16 @@ import java.util.ArrayList;
 public class ReportRecyclerViewAdapter extends RecyclerView.Adapter<ReportRecyclerViewAdapter.ItemViewHolder> {
 
     private ArrayList<Report> mReports;
+    private DisplayImageOptions mDisplayImageOptions;
 
     public ReportRecyclerViewAdapter(ArrayList<Report> reports) {
         this.mReports = reports;
+        mDisplayImageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     @Override
@@ -34,7 +43,7 @@ public class ReportRecyclerViewAdapter extends RecyclerView.Adapter<ReportRecycl
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         holder.tvInformation.setText(mReports.get(position).getInformation());
         holder.tvTitle.setText(mReports.get(position).getTitle());
-        ImageLoader.getInstance().displayImage(mReports.get(position).getUrlImage(),holder.imgAvatar);
+        ImageLoader.getInstance().displayImage(mReports.get(position).getUrlImage(), holder.imgAvatar, mDisplayImageOptions);
     }
 
     @Override

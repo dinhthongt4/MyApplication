@@ -1,5 +1,6 @@
 package com.example.thongdt.myapplication.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.objects.New;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -20,9 +22,16 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private ArrayList<New> mNews;
     private OnItemClickListener mOnItemClickListener;
+    private DisplayImageOptions mDisplayImageOptions;
 
     public NewsRecyclerViewAdapter(ArrayList<New> news) {
         this.mNews = news;
+        mDisplayImageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     @Override
@@ -42,7 +51,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (mNews.get(position).getType() == 0) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-            ImageLoader.getInstance().displayImage(mNews.get(position).getUrlImageHeader(), headerViewHolder.imgAvatarHeader);
+            ImageLoader.getInstance().displayImage(mNews.get(position).getUrlImageHeader(), headerViewHolder.imgAvatarHeader, mDisplayImageOptions);
             headerViewHolder.tvInformation.setText(mNews.get(position).getTitle());
             headerViewHolder.tvTitleHeader.setText(mNews.get(position).getTitleHeader());
         } else {

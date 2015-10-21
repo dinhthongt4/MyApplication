@@ -50,7 +50,7 @@ public class DataFragment extends Fragment {
     }
 
     @Background
-    void loadInformationGame(String urlStarted, String urlNotStart) {
+    public void loadInformationGame(String urlStarted, String urlNotStart) {
         mInformationGames.clear();
         loadInformationGameNotStart(urlNotStart);
         loadInformationGameStarted(urlStarted);
