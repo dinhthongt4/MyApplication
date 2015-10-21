@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textview.header.bar_default">#FAFAFA</color>
+    <color name="bg.header.bar_default">#FAAC58</color>
+    <color name="bg.header.bar_selected">#CEE3F6</color>
+    <color name="textview.header.bar_selected">#2E2EFE</color>
+    <color name="textview.item.recycler.view_header_title">#0404B4</color>
+    <color name="textview.news_selected">#2ECCFA</color>
+    <color name="textview.app_default">#585858</color>
+    <color name="textview.news_title_default">#819FF7</color>
+
+    <color name="textview.recycler.view.menu_background_selected">#726E7E</color>
+    <color name="textview.recycler.view.menu.background_default">#180757</color>
+    <color name="textview.recycler.view_menu">#ffffff</color>
+    <color name="rl.recycler.view.menu_line">#D8D8D8</color>
+
+    <color name="bg.textview.link_application">#D8D8D8</color>
+
+    <color name="bg.recycler.view.data_header">#F3F781</color>
+    <color name="textview.recycler.view.data_header">#180757</color>
+    <color name="textview.recycler.view.data_information">#8181F7</color>
+    <color name="textview.recycler.view.data_information_result">#FE2E2E</color>
+    <color name="bg.recycler.view.data">#D8D8D8</color>
+
+    <color name="textview.recycler.view_report_title">#DF3A01</color>
+
+    <color name="textview.activity.detail_title">#8A0808</color>
+    <color name="textview.activity.detail_date_time">#A4A4A4</color>
+    <color name="textview.activity.detail_author">#000000</color>
+    <color name="textview.activity.detail_text">#585858</color>
+</resources>

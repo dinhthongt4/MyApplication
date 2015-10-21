@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">MyApplication</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="textview.header.bar_news">TIN TỨC</string>
+    <string name="textview.header.bar_data">DỮ LIỆU</string>
+    <string name="textview.header.bar_live_score">LIVESCORE</string>
+    <string name="textview.fragment.data_title_game_played">Các trận đã thi đấu</string>
+    <string name="textview.fragment.data_title_game_playing">Các trận sắp thi đấu</string>
+    
+    <string-array name="list_recycler_menu_title">
+        <item>Báo cáo trận đấu</item>
+        <item>Hậu trường</item>
+        <item>Bóng đá Anh</item>
+        <item>Bóng đá Tây Ban Nha</item>
+        <item>Các Cup UEFA</item>
+        <item>Bóng đá Italia</item>
+        <item>Bóng đá Đức</item>
+        <item>Vòng loại EURO 2016</item>
+        <item>Bóng đá Việt Nam</item>
+        <item>Các giải đấu khác</item>
+    </string-array>
+    <string-array name="list_recycler_menu_url">
+        <item>http://bongdaso.com/news.aspx?Section=REPORT</item>
+        <item>http://bongdaso.com/news.aspx?Section=GOS</item>
+        <item>http://bongdaso.com/news.aspx?Section=ENlG</item>
+        <item>Bhttp://bongdaso.com/news.aspx?Section=ESP</item>
+        <item>Chttp://bongdaso.com/news.aspx?Section=UEFA</item>
+        <item>http://bongdaso.com/news.aspx?Section=ITA</item>
+        <item>Bhttp://bongdaso.com/news.aspx?Section=GER</item>
+        <item>http://bongdaso.com/news.aspx?Section=EURO</item>
+        <item>http://bongdaso.com/news.aspx?Section=VN</item>
+        <item>http://bongdaso.com/news.aspx?Section=OTHER</item>
+    </string-array>
+
+    <string-array name="list_recycler_menu_data">
+        <item>Premier League</item>
+        <item>La Liga</item>
+        <item>Serie A</item>
+        <item>Bundesliga</item>
+        <item>Ligue 1</item>
+        <item>League Cup</item>
+        <item>Europe League</item>
+        <item>Champions League</item>
+    </string-array>
+</resources>

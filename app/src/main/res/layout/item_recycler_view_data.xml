@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rlItem"
+    >
+
+    <TextView
+        android:id="@+id/tvDatePlay"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="17/10"
+        android:textSize="13sp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tvHomeClub"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tvDatePlay"
+        android:text="Manchester Unntich"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:textSize="13sp"
+        />
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tvAwayClub"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/tvHomeClub"
+        android:layout_toLeftOf="@id/tvAwayClub"
+        android:text="14:00"
+        android:paddingTop="10dp"
+        android:background="@color/bg.recycler.view.data"
+        android:gravity="center_horizontal"
+        android:id="@+id/tvTime"
+        />
+</RelativeLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg.header.bar_default"
+        tools:ignore="UselessParent">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_menu"
+                tools:ignore="ContentDescription"
+                android:id="@+id/imgMenu"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/textview.header.bar_news"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@color/textview.header.bar_default"
+            android:id="@+id/tvNews"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/textview.header.bar_data"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/textview.header.bar_default"
+            android:id="@+id/tvData"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/tvLiveScore"
+            android:text="@string/textview.header.bar_live_score"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@color/textview.header.bar_default"
+            />
+
+    </LinearLayout>
+</RelativeLayout>
