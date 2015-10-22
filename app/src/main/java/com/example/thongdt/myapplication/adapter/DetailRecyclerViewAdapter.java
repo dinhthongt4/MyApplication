@@ -1,5 +1,6 @@
 package com.example.thongdt.myapplication.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.objects.Detail;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -29,9 +31,16 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
     private ArrayList<Detail> mDetails;
     private OnItemSameClick mOnItemSameClick;
+    private DisplayImageOptions mDisplayImageOptions;
 
     public DetailRecyclerViewAdapter(ArrayList<Detail> details) {
         this.mDetails = details;
+        mDisplayImageOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 
     @Override
@@ -75,10 +84,10 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             authorViewholder.tvAuthor.setText(mDetails.get(position).getAuthor());
         } else if (DETAIL_IMAGE == mDetails.get(position).getType()) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
-            ImageLoader.getInstance().displayImage(mDetails.get(position).getUrlImage(), imageViewHolder.imgDetail);
+            ImageLoader.getInstance().displayImage(mDetails.get(position).getUrlImage(), imageViewHolder.imgDetail, mDisplayImageOptions);
         } else if (DETAIL_TEXT == mDetails.get(position).getType()) {
             TextViewHolder textViewHolder = (TextViewHolder) holder;
-            textViewHolder.tvInformation.setText(Html.fromHtml("<p>" + mDetails.get(position).getInformation() + "</p>"));
+            textViewHolder.tvInformation.setText("  "+ Html.fromHtml("<p style=\"text-align: justify; text-justify: inter-word\">" + mDetails.get(position).getInformation().trim() + "</p>"));
         } else if (DETAIL_DATE_TIME == mDetails.get(position).getType()) {
             DateTimeViewHolder dateTimeViewHolder = (DateTimeViewHolder) holder;
             dateTimeViewHolder.tvDateTime.setText(mDetails.get(position).getDate());

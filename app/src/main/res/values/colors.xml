@@ -27,7 +27,7 @@
     <color name="textview.activity.detail_title">#8A0808</color>
     <color name="textview.activity.detail_date_time">#A4A4A4</color>
     <color name="textview.activity.detail_author">#000000</color>
-    <color name="textview.activity.detail_text">#585858</color>
+    <color name="textview.activity.detail_text">#424242</color>
 
     <color name="textview.recycler.view.data_name">#08088A</color>
     <color name="textview.recycler.view.data_time">#DF7401</color>

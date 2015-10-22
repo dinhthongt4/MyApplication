@@ -81,7 +81,7 @@ public class DetailActivity extends Activity {
                 Detail detail = new Detail();
                 detail.setType(DetailRecyclerViewAdapter.DETAIL_DATE_TIME);
                 detail.setDate(elementDetails.get(i).select("div.art_date").first().text());
-                Log.v("date",detail.getDate());
+                Log.v("date", detail.getDate());
 
                 mDetails.add(detail);
             } else if (i == 4) {
@@ -92,68 +92,87 @@ public class DetailActivity extends Activity {
                 mDetails.add(detail);
             } else if (i == 5) {
                 Elements elementTexts = elementDetails.get(i).select("div");
-                for (int j = 1; j < elementTexts.size() - 1; j++) {
 
-                    if (elementTexts.get(j).select("font").size() > 2) {
-                        Elements elementsFont = elementTexts.get(j).select("font");
-                        for (int k = 0; k < elementsFont.size(); k ++) {
-                            if (!"".equals(elementsFont.get(k).text().trim())) {
+                if (elementTexts.size() > 3) {
+
+                    for (int j = 1; j < elementTexts.size() - 1; j++) {
+                        if (!elementTexts.get(j).select("img").attr("src").trim().equals("")) {
+                            Detail detail = new Detail();
+                            detail.setType(DetailRecyclerViewAdapter.DETAIL_IMAGE);
+
+                            // Log.v("url",elementsFont.get(k).select("img").attr("src").trim());
+
+                            String url = elementTexts.get(j).select("img").attr("src").trim();
+                            if (!(url.contains("http://") || url.contains("https://"))) {
+                                url = "http://bongdaso.com" + url;
+                            }
+                            detail.setUrlImage(url);
+                            Log.v("url", url);
+                            mDetails.add(detail);
+                        } else {
+
+                            if (!elementTexts.get(j).text().trim().equals("")) {
                                 Detail detail = new Detail();
                                 detail.setType(DetailRecyclerViewAdapter.DETAIL_TEXT);
-                                detail.setInformation(elementsFont.get(k).text().trim());
-                                Log.v("text",detail.getInformation());
-                                mDetails.add(detail);
-                            } else if (elementsFont.get(k).select("img") != null) {
-                                Detail detail = new Detail();
-                                detail.setType(DetailRecyclerViewAdapter.DETAIL_IMAGE);
-
-                                String url = elementsFont.get(j).select("img").attr("src");
-                                if (!(url.contains("http://") || url.contains("https://"))) {
-                                    url = "http://bongdaso.com/" + url;
-                                }
-                                detail.setUrlImage(url);
-                                Log.v("url", detail.getUrlImage());
+                                detail.setInformation(elementTexts.get(j).text().trim());
+                                Log.v("text" + j, detail.getInformation());
                                 mDetails.add(detail);
                             }
                         }
                     }
+                } else {
+                    for (int j = 1; j < elementTexts.size() - 1; j++) {
 
+                        Elements elementsFont = elementTexts.get(j).select("font");
+                        Log.v("size", elementsFont.size() + "");
 
-                    if (!"".equals(elementTexts.get(j).text().trim())) {
-                        Detail detail = new Detail();
-                        detail.setType(DetailRecyclerViewAdapter.DETAIL_TEXT);
-                        detail.setInformation(elementTexts.get(j).text().trim());
-                        Log.v("text",detail.getInformation());
-                        mDetails.add(detail);
-                    } else if (elementTexts.get(j).select("img") != null) {
-                        Detail detail = new Detail();
-                        detail.setType(DetailRecyclerViewAdapter.DETAIL_IMAGE);
+                        for (int k = 0; k < elementsFont.size(); k++) {
+                            if (!elementsFont.get(k).select("img").attr("src").trim().equals("")) {
 
-                        String url = elementTexts.get(j).select("img").attr("src");
-                        if (!url.contains("http://")) {
-                            url = "http://bongdaso.com/" + url;
+                                Detail detail = new Detail();
+                                detail.setType(DetailRecyclerViewAdapter.DETAIL_IMAGE);
+
+                                // Log.v("url",elementsFont.get(k).select("img").attr("src").trim());
+
+                                String url = elementsFont.get(k).select("img").attr("src").trim();
+                                if (!(url.contains("http://") || url.contains("https://"))) {
+                                    url = "http://bongdaso.com" + url;
+                                }
+                                detail.setUrlImage(url);
+                                mDetails.add(detail);
+
+                            } else {
+                                if (!elementsFont.get(k).text().trim().equals("")) {
+                                    Detail detail = new Detail();
+                                    detail.setType(DetailRecyclerViewAdapter.DETAIL_TEXT);
+                                    detail.setInformation(elementsFont.get(k).text().trim());
+                                    mDetails.add(detail);
+                                }
+                            }
                         }
-                        detail.setUrlImage(url);
-                        Log.v("url", detail.getUrlImage());
-                        mDetails.add(detail);
+
                     }
                 }
+
             } else if (i == 6) {
                 Detail detail = new Detail();
                 detail.setType(DetailRecyclerViewAdapter.DETAIL_AUTHOR);
                 detail.setAuthor(elementDetails.get(i).text());
                 Log.v("author", detail.getAuthor());
                 mDetails.add(detail);
-            } else if (i == 8 || i  == 10) {
+            } else if (i == 8 || i == 10) {
                 Elements elementSames = elementDetails.get(i).select("li");
-                for (int j = 0; j < elementSames.size(); j ++) {
+                for (int j = 0; j < elementSames.size(); j++) {
                     Detail detail = new Detail();
                     detail.setType(DetailRecyclerViewAdapter.DETAIL_SAME);
                     detail.setInformation(elementSames.get(j).text().trim());
-                    detail.setUrlNews(elementSames.get(j).select("a").attr("href"));
+
+                    String url = elementSames.get(j).select("a").attr("href").trim();
+                    if (!(url.contains("http://") || url.contains("https://"))) {
+                        url = "http://bongdaso.com/" + url;
+                    }
+                    detail.setUrlNews(url);
                     mDetails.add(detail);
-                    Log.v("same", detail.getInformation());
-                    Log.v("sameUrl", detail.getUrlNews());
                 }
             }
         }
@@ -178,6 +197,7 @@ public class DetailActivity extends Activity {
                 mUrl = mDetails.get(position).getUrlNews();
                 mDetails.clear();
                 loadData();
+
             }
         });
     }
