@@ -1,6 +1,7 @@
 package com.example.thongdt.myapplication.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             ImageLoader.getInstance().displayImage(mDetails.get(position).getUrlImage(), imageViewHolder.imgDetail);
         } else if (DETAIL_TEXT == mDetails.get(position).getType()) {
             TextViewHolder textViewHolder = (TextViewHolder) holder;
-            textViewHolder.tvInformation.setText("   " + mDetails.get(position).getInformation());
+            textViewHolder.tvInformation.setText(Html.fromHtml("<p>" + mDetails.get(position).getInformation() + "</p>"));
         } else if (DETAIL_DATE_TIME == mDetails.get(position).getType()) {
             DateTimeViewHolder dateTimeViewHolder = (DateTimeViewHolder) holder;
             dateTimeViewHolder.tvDateTime.setText(mDetails.get(position).getDate());

@@ -66,9 +66,11 @@ public class NewsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        getTitleNews(doc);
-        getListNews(doc);
-        setUiApplication();
+        if (doc != null) {
+            getTitleNews(doc);
+            getListNews(doc);
+            setUiApplication();
+        }
     }
 
     @UiThread
@@ -108,26 +110,28 @@ public class NewsFragment extends Fragment {
 
     private void getListNews(Document doc) {
         Element elementListNews = doc.select("div#infocus_right_tile").first();
-        for (int i = 0; i < elementListNews.childNodeSize(); i++) {
-            New n = new New();
-            Element elementItemChild = elementListNews.child(i);
-            Element elementA = elementItemChild.select("a").first();
+        if (elementListNews != null) {
+            for (int i = 0; i < elementListNews.childNodeSize(); i++) {
+                New n = new New();
+                Element elementItemChild = elementListNews.child(i);
+                Element elementA = elementItemChild.select("a").first();
 
-            String link = elementA.attr("href");
-            if (!(link.contains("http://") || link.contains("https://"))) {
-                link = "http://bongdaso.com/" + link;
+                String link = elementA.attr("href");
+                if (!(link.contains("http://") || link.contains("https://"))) {
+                    link = "http://bongdaso.com/" + link;
+                }
+                n.setLink(link);
+
+                Element elementImg = elementA.select("img").first();
+                n.setState(elementImg.attr("src"));
+
+                Element elementH1 = elementA.select("h1").first();
+                n.setTitle(elementH1.text());
+
+                n.setType(1);
+
+                mNews.add(n);
             }
-            n.setLink(link);
-
-            Element elementImg = elementA.select("img").first();
-            n.setState(elementImg.attr("src"));
-
-            Element elementH1 = elementA.select("h1").first();
-            n.setTitle(elementH1.text());
-
-            n.setType(1);
-
-            mNews.add(n);
         }
     }
 
@@ -141,21 +145,24 @@ public class NewsFragment extends Fragment {
             e.printStackTrace();
         }
         Element element = doc.select("div#REPORT_tile").first();
-        Elements elementDatas = element.select("div");
 
-        for (int i = 1; i < elementDatas.size() - 4;) {
-            Report report = new Report();
-            report.setUrlImage(elementDatas.get(i + 1).select("img").attr("src"));
-            report.setTitle(elementDatas.get(i + 3).text());
+        if (element != null ) {
+            Elements elementDatas = element.select("div");
 
-            String link = elementDatas.get(i + 3).select("a").attr("href");
-            if (!(link.contains("http://") || link.contains("https://"))) {
-                link = "http://bongdaso.com/" + link;
+            for (int i = 1; i < elementDatas.size() - 4;) {
+                Report report = new Report();
+                report.setUrlImage(elementDatas.get(i + 1).select("img").attr("src"));
+                report.setTitle(elementDatas.get(i + 3).text());
+
+                String link = elementDatas.get(i + 3).select("a").attr("href");
+                if (!(link.contains("http://") || link.contains("https://"))) {
+                    link = "http://bongdaso.com/" + link;
+                }
+                report.setLink(link);
+                report.setInformation(elementDatas.get(i + 4).text());
+                mReports.add(report);
+                i = i + 5;
             }
-            report.setLink(link);
-            report.setInformation(elementDatas.get(i + 4).text());
-            mReports.add(report);
-            i = i + 5;
         }
         setUiNews();
     }
