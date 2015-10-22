@@ -123,9 +123,14 @@ public class DataFragment extends Fragment {
             informationGame1.setDate(informationItem.get(0).text());
             informationGame1.setNameAwayClub(informationItem.get(3).text());
             informationGame1.setNameHomeClub(informationItem.get(1).text());
-            informationGame1.setTime(informationItem.get(2).text());
+            informationGame1.setTime(addTokenResult(informationItem.get(2).text()));
             mInformationGames.add(informationGame1);
         }
+    }
+
+    private String addTokenResult(String result) {
+        String s = result.trim().substring(0,1) + " - " + result.trim().substring(2,3);
+        return s;
     }
 
     private void setBgItem() {

@@ -53,7 +53,7 @@ public class NewsFragment extends Fragment {
         mRecyclerViewNews.setAdapter(mNewsRecyclerViewAdapter);
         mReportRecyclerViewAdapter = new ReportRecyclerViewAdapter(mReports);
         loadDocument();
-        Log.d("tantv","Fragment");
+        onListener();
     }
 
     @Background
@@ -68,7 +68,6 @@ public class NewsFragment extends Fragment {
 
         getTitleNews(doc);
         getListNews(doc);
-
         setUiApplication();
     }
 
@@ -81,30 +80,30 @@ public class NewsFragment extends Fragment {
     private void getTitleNews(Document doc) {
         Element elementTitle = doc.select("div#infocus_left_tile").first();
         New n1 = new New();
+        if (elementTitle != null) {
+            Element elementTitleChild = elementTitle.select("div._title_").first();
+            Log.v("title", elementTitleChild.text());
+            n1.setType(0);
+            n1.setTitleHeader(elementTitleChild.text());
 
-        Element elementTitleChild = elementTitle.select("div._title_").first();
-        Log.v("title", elementTitleChild.text());
-        n1.setType(0);
-        n1.setTitleHeader(elementTitleChild.text());
+            Element elementTitleImage = elementTitle.select("div._img_").first();
+            Element elementTitleA = elementTitleImage.select("a").first();
+            String link = elementTitleA.attr("href");
+            if (!(link.contains("http://") || link.contains("https://"))) {
+                link = "http://bongdaso.com/" + link;
+            }
+            n1.setLink(link);
 
-        Element elementTitleImage = elementTitle.select("div._img_").first();
-        Element elementTitleA = elementTitleImage.select("a").first();
-        String link = elementTitleA.attr("href");
-        if (!(link.contains("http://") || link.contains("https://"))) {
-            link = "http://bongdaso.com/" + link;
+            Element elementTitleSrc = elementTitleA.select("img").first();
+            Log.v("href", elementTitleSrc.attr("src"));
+            n1.setUrlImageHeader(elementTitleSrc.attr("src"));
+
+            Element elementInformation = elementTitle.select("div._brief_").first();
+            Log.v("infor", elementInformation.text());
+            n1.setTitle(elementInformation.text());
+
+            mNews.add(n1);
         }
-        n1.setLink(link);
-
-        Element elementTitleSrc = elementTitleA.select("img").first();
-        Log.v("href", elementTitleSrc.attr("src"));
-        n1.setUrlImageHeader(elementTitleSrc.attr("src"));
-
-        Element elementInformation = elementTitle.select("div._brief_").first();
-        Log.v("infor", elementInformation.text());
-        n1.setTitle(elementInformation.text());
-
-        mNews.add(n1);
-
     }
 
     private void getListNews(Document doc) {
@@ -182,22 +181,24 @@ public class NewsFragment extends Fragment {
 
     @UiThread
     void setUiSection() {
-        mNewsRecyclerViewAdapter.notifyDataSetChanged();
+        mRecyclerViewNews.setAdapter(mNewsRecyclerViewAdapter);
     }
 
     private void getListNewsSection(Document document) {
         Element elementListNews = document.select("div#infocus_right_tile").first();
-        Elements elementTitles = elementListNews.select("div._title_");
-        for (int i = 0; i < elementTitles.size(); i ++) {
-            New n = new New();
-            n.setType(1);
-            n.setTitle(elementTitles.get(i).text());
-            String link = elementTitles.get(i).select("a").attr("href");
-            if (!(link.contains("http://") || link.contains("https://"))) {
-                link = "http://bongdaso.com/" + link;
+        if (elementListNews != null) {
+            Elements elementTitles = elementListNews.select("div._title_");
+            for (int i = 0; i < elementTitles.size(); i ++) {
+                New n = new New();
+                n.setType(1);
+                n.setTitle(elementTitles.get(i).text());
+                String link = elementTitles.get(i).select("a").attr("href");
+                if (!(link.contains("http://") || link.contains("https://"))) {
+                    link = "http://bongdaso.com/" + link;
+                }
+                n.setLink(link);
+                mNews.add(n);
             }
-            n.setLink(link);
-            mNews.add(n);
         }
     }
 
