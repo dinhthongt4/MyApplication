@@ -38,6 +38,7 @@ public class VideoFragment extends Fragment {
 
     private ArrayList<FullInformationVideo.Item> mItems;
     private VideoRecyclerViewAdapter mVideoRecyclerViewAdapter;
+    private int mCount = 10;
 
     //https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCyAojDE5b7HoWX6rzYUn5Mg&type=video&order=date&maxResults=5&key=AIzaSyBtEYk0NLi1DcEjYx8Z1TDDWulmmTajV4s
     @AfterViews
@@ -45,7 +46,7 @@ public class VideoFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerViewVideo.setLayoutManager(layoutManager);
         mItems = new ArrayList<>();
-        mVideoRecyclerViewAdapter = new VideoRecyclerViewAdapter(mItems);
+        mVideoRecyclerViewAdapter = new VideoRecyclerViewAdapter(mItems, mRecyclerViewVideo);
         mRecyclerViewVideo.setAdapter(mVideoRecyclerViewAdapter);
 
         loadInformationChannel();
@@ -56,7 +57,7 @@ public class VideoFragment extends Fragment {
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("https://www.googleapis.com").build();
         Api api = restAdapter.create(Api.class);
         api.getVideoChannel("snippet", "UCyAojDE5b7HoWX6rzYUn5Mg",
-                "video", "date", 20, "AIzaSyBtEYk0NLi1DcEjYx8Z1TDDWulmmTajV4s", new Callback<FullInformationVideo>() {
+                "video", "date", mCount, "AIzaSyBtEYk0NLi1DcEjYx8Z1TDDWulmmTajV4s", new Callback<FullInformationVideo>() {
                     @Override
                     public void success(FullInformationVideo fullInformationVideo, Response response) {
                         mItems.addAll(fullInformationVideo.getItems());
@@ -71,11 +72,48 @@ public class VideoFragment extends Fragment {
                 });
     }
 
+    private void loadInformationDataLoadMore() {
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("https://www.googleapis.com").build();
+        Api api = restAdapter.create(Api.class);
+        api.getVideoChannel("snippet", "UCyAojDE5b7HoWX6rzYUn5Mg",
+                "video", "date", mCount, "AIzaSyBtEYk0NLi1DcEjYx8Z1TDDWulmmTajV4s", new Callback<FullInformationVideo>() {
+                    @Override
+                    public void success(FullInformationVideo fullInformationVideo, Response response) {
+
+                        for (int i = mItems.size() ; i < mCount ; i ++) {
+                            mItems.add(fullInformationVideo.getItems().get(i));
+                            mVideoRecyclerViewAdapter.notifyItemInserted(mItems.size());
+                        }
+                        mVideoRecyclerViewAdapter.setLoaded();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+
+                    }
+                });
+    }
+
     private void setListener() {
         mVideoRecyclerViewAdapter.setOnItemClickListener(new VideoRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
                 VideoActivity_.intent(getContext()).extra("videoId", mItems.get(position).id.videoId).start();
+            }
+        });
+
+        mVideoRecyclerViewAdapter.setOnLoadMoreListener(new VideoRecyclerViewAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mItems.add(null);
+                mVideoRecyclerViewAdapter.notifyItemInserted(mItems.size() - 1);
+                if (mCount < 40) {
+                    mItems.remove(mItems.size() - 1);
+                    mVideoRecyclerViewAdapter.notifyItemRemoved(mItems.size());
+                    mCount = mCount + 5;
+                    loadInformationDataLoadMore();
+                    Log.v("connt", "" + mCount);
+                }
             }
         });
     }
