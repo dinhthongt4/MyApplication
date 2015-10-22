@@ -61,7 +61,7 @@ public class MainActivity extends FragmentActivity {
 
     private ArrayList<Menu> mMenus;
     private MenuRecyclerViewAdapter mMenuRecyclerViewAdapter;
-    private boolean mIsDataFragment;
+    private int mPositionFragment;
 
     @AfterViews
     void init() {
@@ -106,7 +106,7 @@ public class MainActivity extends FragmentActivity {
         final NewsFragment newsFragment = new NewsFragment_();
         final DataFragment dataFragment = new DataFragment_();
         final VideoFragment videoFragment = new VideoFragment_();
-        fragmentTransaction.add(R.id.frContainFragment, newsFragment).commit();
+        fragmentTransaction.replace(R.id.frContainFragment, newsFragment).commit();
         mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news));
 
         getListMenuNews();
@@ -120,11 +120,13 @@ public class MainActivity extends FragmentActivity {
                 } else if (position == 1) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frContainFragment, newsFragment).commit();
-                    newsFragment.loadDocument();
+                    if (mPositionFragment == 0) {
+                        newsFragment.loadDocument();
+                    }
                     getListMenuNews();
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news));
                     mMenuRecyclerViewAdapter.notifyDataSetChanged();
-                    mIsDataFragment = false;
+                    mPositionFragment = 0;
 
                 } else if (position == 2) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -132,7 +134,7 @@ public class MainActivity extends FragmentActivity {
                     getListMenuData();
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_data) + " > " + mMenus.get(0).getTitle());
                     mMenuRecyclerViewAdapter.notifyDataSetChanged();
-                    mIsDataFragment = true;
+                    mPositionFragment = 1;
 
                 } else {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -141,6 +143,7 @@ public class MainActivity extends FragmentActivity {
 
                     mMenus.clear();
                     mMenuRecyclerViewAdapter.notifyDataSetChanged();
+                    mPositionFragment = 2;
                 }
             }
         });
@@ -176,10 +179,10 @@ public class MainActivity extends FragmentActivity {
                 mMenuRecyclerViewAdapter.notifyDataSetChanged();
 
 
-                if (mIsDataFragment) {
+                if (mPositionFragment == 1) {
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_data) + " > " + mMenus.get(position).getTitle());
                     dataFragment.loadInformationGame(Link.LINK_STARTED[position], Link.LINK_NOT_START[position]);
-                } else {
+                } else if (mPositionFragment == 0){
                     mTvLinkApplication.setText(getResources().getString(R.string.textview_header_bar_news) + " > " + mMenus.get(position).getTitle());
                     if (position == 0) {
                         newsFragment.loadReportList(mMenus.get(position).getUrl());

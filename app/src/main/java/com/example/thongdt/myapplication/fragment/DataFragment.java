@@ -89,8 +89,8 @@ public class DataFragment extends Fragment {
             InformationGame informationGame1 = new InformationGame();
             informationGame1.setType(1);
             informationGame1.setDate(informationItem.get(0).text());
-            informationGame1.setNameAwayClub(informationItem.get(1).text());
-            informationGame1.setNameHomeClub(informationItem.get(3).text());
+            informationGame1.setNameAwayClub(informationItem.get(3).text());
+            informationGame1.setNameHomeClub(informationItem.get(1).text());
             informationGame1.setTime(informationItem.get(2).text());
             mInformationGames.add(informationGame1);
         }
@@ -121,8 +121,8 @@ public class DataFragment extends Fragment {
             InformationGame informationGame1 = new InformationGame();
             informationGame1.setType(1);
             informationGame1.setDate(informationItem.get(0).text());
-            informationGame1.setNameAwayClub(informationItem.get(1).text());
-            informationGame1.setNameHomeClub(informationItem.get(3).text());
+            informationGame1.setNameAwayClub(informationItem.get(3).text());
+            informationGame1.setNameHomeClub(informationItem.get(1).text());
             informationGame1.setTime(informationItem.get(2).text());
             mInformationGames.add(informationGame1);
         }

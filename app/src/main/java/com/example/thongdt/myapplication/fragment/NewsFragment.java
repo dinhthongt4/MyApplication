@@ -52,9 +52,8 @@ public class NewsFragment extends Fragment {
         mRecyclerViewNews.setLayoutManager(layoutManager);
         mRecyclerViewNews.setAdapter(mNewsRecyclerViewAdapter);
         mReportRecyclerViewAdapter = new ReportRecyclerViewAdapter(mReports);
-
-        onListener();
         loadDocument();
+        Log.d("tantv","Fragment");
     }
 
     @Background
@@ -75,8 +74,8 @@ public class NewsFragment extends Fragment {
 
     @UiThread
     void setUiApplication() {
-
-        mNewsRecyclerViewAdapter.notifyDataSetChanged();
+        Log.v("mnew",mNews.size() + "");
+        mRecyclerViewNews.setAdapter(mNewsRecyclerViewAdapter);
     }
 
     private void getTitleNews(Document doc) {
