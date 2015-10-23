@@ -114,7 +114,7 @@ public class DetailActivity extends Activity {
                             if (!elementTexts.get(j).text().trim().equals("")) {
                                 Detail detail = new Detail();
                                 detail.setType(DetailRecyclerViewAdapter.DETAIL_TEXT);
-                                detail.setInformation(elementTexts.get(j).text().trim());
+                                detail.setInformation(elementTexts.get(j) + "");
                                 Log.v("text" + j, detail.getInformation());
                                 mDetails.add(detail);
                             }
@@ -145,7 +145,7 @@ public class DetailActivity extends Activity {
                                 if (!elementsFont.get(k).text().trim().equals("")) {
                                     Detail detail = new Detail();
                                     detail.setType(DetailRecyclerViewAdapter.DETAIL_TEXT);
-                                    detail.setInformation(elementsFont.get(k).text().trim());
+                                    detail.setInformation(elementsFont.get(k) + "");
                                     mDetails.add(detail);
                                 }
                             }
@@ -197,7 +197,6 @@ public class DetailActivity extends Activity {
                 mUrl = mDetails.get(position).getUrlNews();
                 mDetails.clear();
                 loadData();
-
             }
         });
     }

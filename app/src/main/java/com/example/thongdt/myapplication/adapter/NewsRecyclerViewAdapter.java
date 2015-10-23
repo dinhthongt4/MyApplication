@@ -57,10 +57,14 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         } else {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.tvTitle.setText(mNews.get(position).getTitle());
+            itemViewHolder.tvTitle.setTextColor(0xff819FF7);
 
             if (mNews.get(position).getState() != null) {
-                if(!mNews.get(position).getState().equals("img/bullet_black.png")) {
+                if(mNews.get(position).getState().equals(mNews.get(1).getState())) {
                     itemViewHolder.imgState.setImageResource(R.drawable.ic_new_post);
+                    itemViewHolder.tvTitle.setTextColor(0xffDF7401);
+                } else {
+                    itemViewHolder.imgState.setImageResource(R.drawable.ic_post);
                 }
             }
         }

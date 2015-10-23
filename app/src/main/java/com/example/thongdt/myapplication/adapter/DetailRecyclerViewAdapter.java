@@ -87,7 +87,7 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
             ImageLoader.getInstance().displayImage(mDetails.get(position).getUrlImage(), imageViewHolder.imgDetail, mDisplayImageOptions);
         } else if (DETAIL_TEXT == mDetails.get(position).getType()) {
             TextViewHolder textViewHolder = (TextViewHolder) holder;
-            textViewHolder.tvInformation.setText("  "+ Html.fromHtml("<p style=\"text-align: justify; text-justify: inter-word\">" + mDetails.get(position).getInformation().trim() + "</p>"));
+            textViewHolder.tvInformation.setText("  "+ Html.fromHtml(mDetails.get(position).getInformation().trim()));
         } else if (DETAIL_DATE_TIME == mDetails.get(position).getType()) {
             DateTimeViewHolder dateTimeViewHolder = (DateTimeViewHolder) holder;
             dateTimeViewHolder.tvDateTime.setText(mDetails.get(position).getDate());
