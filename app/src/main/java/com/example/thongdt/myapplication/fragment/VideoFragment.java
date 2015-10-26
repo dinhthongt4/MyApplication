@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.activities.VideoActivity_;
@@ -36,6 +38,9 @@ public class VideoFragment extends Fragment {
     @ViewById(R.id.recyclerViewVideo)
     RecyclerView mRecyclerViewVideo;
 
+    @ViewById(R.id.progressBar)
+    ProgressBar mProgressBar;
+
     private ArrayList<FullInformationVideo.Item> mItems;
     private VideoRecyclerViewAdapter mVideoRecyclerViewAdapter;
     private int mCount = 10;
@@ -49,6 +54,7 @@ public class VideoFragment extends Fragment {
         mVideoRecyclerViewAdapter = new VideoRecyclerViewAdapter(mItems, mRecyclerViewVideo);
         mRecyclerViewVideo.setAdapter(mVideoRecyclerViewAdapter);
 
+        mProgressBar.setVisibility(View.VISIBLE);
         loadInformationChannel();
         setListener();
     }
@@ -63,6 +69,7 @@ public class VideoFragment extends Fragment {
                         mItems.addAll(fullInformationVideo.getItems());
                         Log.v("size", "" + mItems.get(0).snippet.title);
                         mVideoRecyclerViewAdapter.notifyDataSetChanged();
+                        mProgressBar.setVisibility(View.GONE);
                     }
 
                     @Override

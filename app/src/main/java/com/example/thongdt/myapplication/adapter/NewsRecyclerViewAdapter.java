@@ -1,5 +1,6 @@
 package com.example.thongdt.myapplication.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,9 +24,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private ArrayList<New> mNews;
     private OnItemClickListener mOnItemClickListener;
     private DisplayImageOptions mDisplayImageOptions;
+    private Context mContext;
 
-    public NewsRecyclerViewAdapter(ArrayList<New> news) {
+    public NewsRecyclerViewAdapter(ArrayList<New> news, Context context) {
         this.mNews = news;
+        this.mContext = context;
+
         mDisplayImageOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
@@ -57,8 +61,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         } else {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.tvTitle.setText(mNews.get(position).getTitle());
-            itemViewHolder.tvTitle.setTextColor(0xff819FF7);
-
             if (mNews.get(position).getState() != null) {
                 if(mNews.get(position).getState().equals(mNews.get(1).getState())) {
                     itemViewHolder.imgState.setImageResource(R.drawable.ic_new_post);

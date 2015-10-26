@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.thongdt.myapplication.activities.DetailActivity;
 import com.example.thongdt.myapplication.activities.DetailActivity_;
@@ -62,6 +63,7 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<Menu> mMenus;
     private MenuRecyclerViewAdapter mMenuRecyclerViewAdapter;
     private int mPositionFragment;
+    private static long mBack_pressed;
 
     @AfterViews
     void init() {
@@ -98,6 +100,17 @@ public class MainActivity extends FragmentActivity {
         mRecyclerViewMenu.setAdapter(mMenuRecyclerViewAdapter);
 
         setListener();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mBack_pressed + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+        }
+        else{
+            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+            mBack_pressed = System.currentTimeMillis();
+        }
     }
 
     private void setListener() {

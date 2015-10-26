@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.adapter.DataRecyclerViewAdapter;
@@ -33,6 +35,9 @@ public class DataFragment extends Fragment {
     @ViewById(R.id.recyclerViewData)
     RecyclerView mRecyclerViewData;
 
+    @ViewById(R.id.progressBar)
+    ProgressBar mProgressBar;
+
     private ArrayList<InformationGame> mInformationGames;
     private DataRecyclerViewAdapter mDataRecyclerViewAdapter;
 
@@ -44,6 +49,8 @@ public class DataFragment extends Fragment {
         mRecyclerViewData.setLayoutManager(layoutManager);
         mDataRecyclerViewAdapter = new DataRecyclerViewAdapter(mInformationGames);
         mRecyclerViewData.setAdapter(mDataRecyclerViewAdapter);
+
+        mProgressBar.setVisibility(View.VISIBLE);
 
         loadInformationGame("http://tyso.bongda.com.vn/widgets/widget-fixtures-finished.php?league_id=1&season=1516&limit=10&css=http%3A%2F%2Ftyso.bongda.com.vn%2Fcss%2Ffixture-recent.css"
                 ,"http://tyso.bongda.com.vn/widgets/widget-fixtures-not-started.php?league_id=1&season=1516&limit=10&css=http%3A%2F%2Ftyso.bongda.com.vn%2Fcss%2Ffixture-recent.css");
@@ -61,6 +68,7 @@ public class DataFragment extends Fragment {
     @UiThread
     void setUiApplication() {
         mDataRecyclerViewAdapter.notifyDataSetChanged();
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private void loadInformationGameNotStart(String url) {

@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.thongdt.myapplication.R;
 import com.example.thongdt.myapplication.activities.DetailActivity_;
@@ -36,6 +38,9 @@ public class NewsFragment extends Fragment {
     @ViewById(R.id.recyclerViewNews)
     RecyclerView mRecyclerViewNews;
 
+    @ViewById(R.id.progressBar)
+    ProgressBar mProgressBar;
+
     private static final String TAG = "NewsFragment";
     private ArrayList<New> mNews;
     private NewsRecyclerViewAdapter mNewsRecyclerViewAdapter;
@@ -47,11 +52,13 @@ public class NewsFragment extends Fragment {
         mNews = new ArrayList<>();
         mReports = new ArrayList<>();
 
-        mNewsRecyclerViewAdapter = new NewsRecyclerViewAdapter(mNews);
+        mNewsRecyclerViewAdapter = new NewsRecyclerViewAdapter(mNews, getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerViewNews.setLayoutManager(layoutManager);
         mRecyclerViewNews.setAdapter(mNewsRecyclerViewAdapter);
         mReportRecyclerViewAdapter = new ReportRecyclerViewAdapter(mReports);
+
+        mProgressBar.setVisibility(View.VISIBLE);
         loadDocument();
         onListener();
     }
@@ -77,6 +84,7 @@ public class NewsFragment extends Fragment {
     void setUiApplication() {
         Log.v("mnew",mNews.size() + "");
         mRecyclerViewNews.setAdapter(mNewsRecyclerViewAdapter);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private void getTitleNews(Document doc) {
